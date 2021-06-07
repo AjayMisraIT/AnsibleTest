@@ -1,0 +1,14 @@
+---
+- name: check hostname of server
+  hosts: Lin
+  become: true  
+  
+  tasks:
+
+    - name: check hostname
+      shell: hostname
+      register: fqdn
+    
+    - name: Display the fqdn
+      debug:
+        var: fqdn
