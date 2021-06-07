@@ -1,0 +1,14 @@
+---
+- name: check hostname of server
+  hosts: Win
+  become: true  
+  
+  tasks:
+
+    - name: check hostname
+      win_shell: hostname
+      register: fqdn
+    
+    - name: Display the fqdn
+      debug:
+        var: fqdn
