@@ -1,0 +1,23 @@
+[Lin]
+192.168.56.102
+
+[Win]
+192.168.56.103
+#192.168.56.104
+
+[Lin:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_pass=Caradigm@123
+ansible_become_method = sudo
+ansible_become_user = root
+ansible_become_pass = Caradigm@123
+
+[Win:vars]
+ansible_connection=winrm
+ansible_user=ajaymisra
+ansible_password=Caradigm@123
+ansible_winrm_server_cert_validation=ignore
+ansible_become_method = runas
+ansible_become_user = ajaymisra
+ansible_become_pass = Caradigm@123
