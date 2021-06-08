@@ -1,0 +1,48 @@
+---
+#play to add user to group
+- name: To add user to group
+  hosts: Win
+  become: false
+  vars:
+    ad_group_samname: "LearnAnsibleGroup"
+    ad_user_samname: "AnsibleUser"
+
+  tasks:
+
+    - name: To check connection to server
+      block:
+        - name: check connection to win server
+          wait_for_connection:
+          register: connection_result
+               
+        - name: Get AD user detail
+          win_shell: Get-ADUser -Filter {SamAccountName -eq "{{ ad_user_samname }}"}
+          register: user
+        - debug:
+            var: user.stdout_lines
+        
+        - name: Get AD group detail
+          win_shell: Get-ADGroup -Filter {SamAccountName -eq "{{ ad_group_samname }}"}
+          register: group
+        - debug:
+            var: group.stdout_lines[8].split(":")[1]
+
+        - name: Add user to group
+          win_domain_group_membership:
+            name: "{{ ad_group_samname }}"
+            members:
+              - "{{ ad_user_samname }}"
+            state: present
+          register: user_addition
+        - debug:
+            var: user_addition.changed
+        
+
+      
+      rescue:
+        - name: Error message
+          debug:
+            msg: "Error ocurred manual intervention required"  
+          
+
+
