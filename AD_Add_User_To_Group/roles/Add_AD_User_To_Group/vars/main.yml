@@ -1,2 +1,4 @@
 ---
 # vars file for Add_AD_User_To_Group
+ad_group_samname: "LearnAnsibleGroup"
+ad_user_samname: "AnsibleUser"

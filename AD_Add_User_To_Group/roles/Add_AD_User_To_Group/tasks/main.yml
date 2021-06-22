@@ -1,2 +1,29 @@
 ---
 # tasks file for Add_AD_User_To_Group
+- name: Get AD user detail
+  win_shell: Get-ADUser -Filter {SamAccountName -eq "{{ ad_user_samname }}"}
+  register: user
+
+- name: Debug user details
+  debug: 
+    var: user.stdout
+
+- name: Get AD group detail
+  win_shell: Get-ADGroup -Filter {SamAccountName -eq "{{ ad_group_samname }}"}
+  register: group
+
+- name: Debug group details
+  debug:
+    var: group.stdout_lines[8].split(":")[1]
+
+- name: Add user to group
+  win_domain_group_membership:
+    name: "{{ ad_group_samname }}"
+    members:
+      - "{{ ad_user_samname }}"
+    state: present
+  register: user_addition
+  
+- name: Debug user addition details
+  debug:
+    var: user_addition.changed | bool
