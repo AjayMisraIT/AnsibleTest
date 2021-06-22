@@ -6,7 +6,7 @@
 
 - name: Debug user details
   debug: 
-    var: user.stdout
+    var: user
 
 - name: Get AD group detail
   win_shell: Get-ADGroup -Filter {SamAccountName -eq "{{ ad_group_samname }}"}
@@ -14,7 +14,7 @@
 
 - name: Debug group details
   debug:
-    var: group.stdout_lines[8].split(":")[1]
+    var: group.stdout_lines
 
 - name: Add user to group
   win_domain_group_membership:
@@ -23,7 +23,8 @@
       - "{{ ad_user_samname }}"
     state: present
   register: user_addition
-  
+
 - name: Debug user addition details
   debug:
     var: user_addition.changed | bool
+  
