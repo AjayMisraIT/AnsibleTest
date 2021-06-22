@@ -19,7 +19,7 @@
           win_shell: Get-ADUser -Filter {SamAccountName -eq "{{ ad_user_samname }}"}
           register: user
         - debug:
-            var: user.stdout_lines
+            var: user.stdout | regex_search("{{ ad_user_samname }}")
         
         - name: Get AD group detail
           win_shell: Get-ADGroup -Filter {SamAccountName -eq "{{ ad_group_samname }}"}
@@ -35,7 +35,7 @@
             state: present
           register: user_addition
         - debug:
-            var: user_addition.changed
+            var: user_addition.changed | bool
         
 
       
