@@ -16,7 +16,7 @@
       rescue:
         - name: Error message
           fail:
-            msg: "Failed to connect to Win server"
+            msg: "Failed to connect to Win server, details: {{ connection_result.stderr }}"
     
     - name: To add AD user in given group
       when: connection_result is successful

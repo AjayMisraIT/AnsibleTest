@@ -26,5 +26,5 @@
 
 - name: Debug user addition details
   debug:
-    var: user_addition.changed | bool
+    var: user_addition
   
