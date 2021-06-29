@@ -12,3 +12,17 @@
     - name: Display the fqdn
       debug:
         var: fqdn
+    
+    - name: Install DHCP with sub features and management tools
+      win_feature:
+        name: DHCP
+        state: present
+        include_sub_features: yes
+        include_management_tools: yes
+      register: win_feature
+    
+    - name: Display the win_feature
+      debug:
+        var: win_feature
+
+    
