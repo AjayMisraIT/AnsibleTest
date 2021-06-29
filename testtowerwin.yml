@@ -6,7 +6,7 @@
   tasks:
 
     - name: check hostname
-      win_shell: whoami
+      win_shell: hostname
       register: fqdn
     
     - name: Display the fqdn
